@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="author" content="Ethan Garnier">
+        <title>FogWatch|Official</title>
+        
+        <!--Link Bootrstrap-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!--Index stylesheet-->
+        <!-- <link href="../css/index.css" rel="stylesheet"> -->
+
+        <!--Jquery-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+        <style type="text/css">
+            /* On small screens, set height to 'auto' for sidenav and grid */
+            @media screen and (max-width: 767px) {
+              .sidenav {
+                height: auto;
+                padding: 15px;
+              }
+              .row.content {height:auto;} 
+            }
+            .navbar {
+                margin-bottom: 0;
+                border-radius: 0;
+            }
+
+
+
+            /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+            .row.content {height: 450px}
+
+            /* Set gray background color and 100% height */
+            .sidenav {
+              padding-top: 20px;
+              background-color: #f1f1f1;
+              height: 100%;
+            }
+
+            .link{
+              text-decoration: none;
+              font-size: 25px;
+            }
+
+            .sideHeader{
+              font-size: 25px;
+            }
+
+            /* Set black background color, white text and some padding */
+            footer {
+              background-color: #555;
+              color: white;
+              padding: 15px;
+            }
+               
+        </style>
+
+
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>                        
+                </button>
+                <a class="navbar-brand" href="./index.html"><img src="media/placeholder-logo.png" alt="FogWatch|Official" height="20px;"></a>
+              </div>
+              <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                  <li><a href="./index.html">Home</a></li>
+                  <li><a href="./about.html">About</a></li>
+                  <li><a href="./partners.html">Partners</li>
+                </ul>
+              </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid text-center">    
+            <div class="row content">
+                <div class="col-sm-2 sidenav">
+                    <p class="sideHeader">Follow us!</p>
+                    <div class="well">
+                        <a class="link" href="https://github.com/EthanG78" target="_blank"><img src="media/github.png" height="55px;"></a>
+                    </div>
+                    <div class="well">
+                        <a class="link" href="#" target="_blank"><img src="media/facebook.png" height="55px;"></a>
+                    </div>
+                </div>
+                <div class="col-sm-8 text-left"> 
+                    <h1>Monitor Status</h1>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                #
+                                </th>
+                                <th>
+                                    Position
+                                </th>
+                                <th>
+                                    Last Updated
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr {{if eq .Status "Active"}} class="success" {{else}} class="danger" {{end}}>
+                                <td>
+                                    1
+                                </td>
+                                <td>
+                                    Saint-John West
+                                </td>
+                                <td>
+                                    {{ .Date }}
+                                </td>
+                                <td>
+                                    {{ .Status }}
+                                </td>
+                            </tr>
+                            <tr {{if eq .Status "Active"}} class="success" {{else}} class="danger" {{end}}>
+                                <td>
+                                    2
+                                </td>
+                                <td>
+                                    Saint-John East
+                                </td>
+                                <td>
+                                    {{ .Date }}
+                                </td>
+                                <td>
+                                    {{ .Status}}
+                                </td>
+                            </tr>
+                            <tr {{if eq .Status "Active"}} class="success" {{else}} class="danger" {{end}}>
+                                <td>
+                                    3
+                                </td>
+                                <td>
+                                    Uptown Saint-John 
+                                </td>
+                                <td>
+                                    {{ .Date }}
+                                </td>
+                                <td>
+                                    {{ .Status }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-2 sidenav">
+                    <div class="well">
+                        <p>ADS</p>
+                    </div>
+                    <div class="well">
+                        <p>ADS</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+           <!--Page Footer-->
+        <footer class="container-fluid text-center">
+            <p>Made with <3 by the E^2 Team</p>
+        </footer>
+    
+    </body>
+</html>

@@ -9,6 +9,7 @@ import (
 
 var templates = template.Must(template.ParseGlob("static/templates/*.html"))
 
+//The data payload that will be sent to the site via Firebase
 type payload struct {
 	Date string /*
 		Location string
@@ -20,7 +21,7 @@ type payload struct {
 
 func index(w http.ResponseWriter, r *http.Request) {
 	currentTime := time.Now().Local()
-	send := payload{
+	toSend := payload{
 		Date:   currentTime.Format("01-02-2006"),
 		Status: "Active",
 	}
@@ -28,7 +29,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatalf("Error parsing template: %v", err)
 	}
-	t.Execute(w, send)
+	t.Execute(w, toSend)
 }
 
 //Just for serving static files
@@ -48,6 +49,20 @@ func partners(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, nil)
 }
 
+func monitorStatus(w http.ResponseWriter, r *http.Request) {
+	currentTime := time.Now().Local()
+	toSend := payload{
+		Date:   currentTime.Format("01-02-2006"),
+		Status: "Active",
+	}
+	t, err := template.ParseFiles("static/templates/status.html")
+	if err != nil {
+		log.Fatalf("Error parsing template: %v", err)
+	}
+	t.Execute(w, toSend)
+}
+
+//For if statements in templates
 var FuncMap = template.FuncMap{
 	"eq": func(a, b interface{}) bool {
 		return a == b
@@ -60,6 +75,8 @@ func main() {
 	http.HandleFunc("/", index)
 	http.HandleFunc("/about.html", about)
 	http.HandleFunc("/partners.html", partners)
+	http.HandleFunc("/status.html", monitorStatus)
+
 	log.Println("Now serving on localhost:8080")
 	log.Fatal(http.ListenAndServe("localhost:8080", nil))
 }
