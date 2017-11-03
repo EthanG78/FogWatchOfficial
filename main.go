@@ -29,9 +29,28 @@ func index(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, send)
 }
 
+//Just for serving static files
+func about(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("static/templates/about.html")
+	if err != nil {
+		log.Fatalf("Error parsing template: %v", err)
+	}
+	t.Execute(w, nil)
+}
+
+func partners(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("static/templates/partners.html")
+	if err != nil {
+		log.Fatalf("Error parsing template: %v", err)
+	}
+	t.Execute(w, nil)
+}
+
 func main() {
 
 	http.HandleFunc("/", index)
+	http.HandleFunc("/about.html", about)
+	http.HandleFunc("/partners.html", partners)
 	log.Println("Now serving on localhost:8080")
 	log.Fatal(http.ListenAndServe("localhost:8080", nil))
 }
