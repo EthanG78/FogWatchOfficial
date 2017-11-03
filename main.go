@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+var templates = template.Must(template.ParseGlob("static/templates/*.html"))
+
 type payload struct {
 	Date string /*
 		Location string
@@ -46,7 +48,14 @@ func partners(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, nil)
 }
 
+var FuncMap = template.FuncMap{
+	"eq": func(a, b interface{}) bool {
+		return a == b
+	},
+}
+
 func main() {
+	templates = templates.Funcs(FuncMap)
 
 	http.HandleFunc("/", index)
 	http.HandleFunc("/about.html", about)
