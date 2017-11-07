@@ -75,6 +75,8 @@ func main() {
 	templates = templates.Funcs(FuncMap)
 
 	http.Handle("/media/", http.StripPrefix("/media/", http.FileServer(http.Dir("static/media"))))
+	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("static/js"))))
+
 	http.HandleFunc("/", index)
 	http.HandleFunc("/about.html", about)
 	http.HandleFunc("/partners.html", partners)
