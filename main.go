@@ -7,15 +7,24 @@ import (
 	"time"
 )
 
-var templates = template.Must(template.ParseGlob("static/templates/*.html"))
+var templates = template.Must(template.ParseGlob("static/*.html"))
+
+//For if statements in templates
+var FuncMap = template.FuncMap{
+	"eq": func(a, b interface{}) bool {
+		return a == b
+	},
+}
 
 //The data payload that will be sent to the site via Firebase
 type payload struct {
-	Date string /*
+	Date string
+	/*
 		Location string
 		Temp     string
 		Humidity string
-		Wind     string*/
+		Wind     string
+	*/
 	Status string
 }
 
@@ -25,7 +34,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 		Date:   currentTime.Format("01-02-2006"),
 		Status: "Active",
 	}
-	t, err := template.ParseFiles("static/templates/index.html")
+	t, err := template.ParseFiles("static/index.html")
 	if err != nil {
 		log.Fatalf("Error parsing template: %v", err)
 	}
@@ -34,7 +43,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 //Just for serving static files
 func about(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("static/templates/about.html")
+	t, err := template.ParseFiles("static/about.html")
 	if err != nil {
 		log.Fatalf("Error parsing template: %v", err)
 	}
@@ -42,7 +51,7 @@ func about(w http.ResponseWriter, r *http.Request) {
 }
 
 func partners(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("static/templates/partners.html")
+	t, err := template.ParseFiles("static/partners.html")
 	if err != nil {
 		log.Fatalf("Error parsing template: %v", err)
 	}
@@ -55,23 +64,17 @@ func monitorStatus(w http.ResponseWriter, r *http.Request) {
 		Date:   currentTime.Format("01-02-2006"),
 		Status: "Active",
 	}
-	t, err := template.ParseFiles("static/templates/status.html")
+	t, err := template.ParseFiles("static/status.html")
 	if err != nil {
 		log.Fatalf("Error parsing template: %v", err)
 	}
 	t.Execute(w, toSend)
 }
 
-//For if statements in templates
-var FuncMap = template.FuncMap{
-	"eq": func(a, b interface{}) bool {
-		return a == b
-	},
-}
-
 func main() {
 	templates = templates.Funcs(FuncMap)
 
+	http.Handle("/media/", http.StripPrefix("/media/", http.FileServer(http.Dir("static/media"))))
 	http.HandleFunc("/", index)
 	http.HandleFunc("/about.html", about)
 	http.HandleFunc("/partners.html", partners)
