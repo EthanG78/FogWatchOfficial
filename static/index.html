@@ -169,9 +169,9 @@
                     <div class="dropdown">
                         <button onclick="myFunction()" class="dropbtn">Current locations<span class="caret"></span></button>
                         <div id="myDropdown" class="dropdown-content">
-                            <a href="#">Saint-John West</a>
-                            <a href="#">Uptown Saint-John</a>
-                            <a href="#">Saint-John East</a>
+                            <a id="showWest">Saint-John West</a>
+                            <a id="showEast">Saint-John East</a>
+                            <a id="showUptown">Uptown Saint-John</a>
                         </div>
                     </div>
                     <h3>Weather Monitor Status</h3>
@@ -193,7 +193,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr {{if eq .Status "Active"}} class="success" {{else}} class="danger" {{end}}>
+                            <tr {{if eq .Status "Active"}} class="success" {{else}} class="danger" {{end}} id="west" style="display:none;">
                                 <td>
                                     1
                                 </td>
@@ -207,7 +207,7 @@
                                     {{ .Status }}
                                 </td>
                             </tr>
-                            <tr {{if eq .Status "Active"}} class="success" {{else}} class="danger" {{end}}>
+                            <tr {{if eq .Status "Active"}} class="success" {{else}} class="danger" {{end}} id="east" style="display:none;">
                                 <td>
                                     2
                                 </td>
@@ -221,7 +221,7 @@
                                     {{ .Status}}
                                 </td>
                             </tr>
-                            <tr {{if eq .Status "Active"}} class="success" {{else}} class="danger" {{end}}>
+                            <tr {{if eq .Status "Active"}} class="success" {{else}} class="danger" {{end}} id="uptown" style="display:none;">
                                 <td>
                                     3
                                 </td>
