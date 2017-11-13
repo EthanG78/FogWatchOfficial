@@ -16,7 +16,7 @@ var FuncMap = template.FuncMap{
 	},
 }
 
-//The data payload that will be sent to the site via Firebase
+//This struct will be removed in the future
 type payload struct {
 	Date string
 	/*
@@ -85,3 +85,5 @@ func main() {
 	log.Println("Now serving on localhost:8080")
 	log.Fatal(http.ListenAndServe("localhost:8080", nil))
 }
+
+//TODO: Design how to present the firebase data on the site using payload struct

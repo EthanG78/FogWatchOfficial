@@ -72,3 +72,5 @@ func (p *Payload) GetWindSpeed() string {
 func (p *Payload) GetStatus() string {
 	return p.Status
 }
+
+//TODO: These metods are REALLY SLOW!!! fix for the future
