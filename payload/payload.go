@@ -1,6 +1,12 @@
 package payload
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"gopkg.in/zabawaba99/firego.v1"
+	"log"
+	//"time" Will be used to get local date
+)
 
 type Payload struct {
 	Date     string
@@ -19,8 +25,46 @@ func (p *Payload) PrintPayload() {
 	fmt.Printf("Date: %v\nLocation: %v\nTemperature: %v\nHumidity: %v\nWind Speed: %v\nStatus: %v/n", p.Date, p.Location, p.Temp, p.Humidity, p.WindS, p.Status)
 }
 
-func (p *Payload) GetPayload() *Payload {
-	return p
+//For fetching firebase data (Make it return an err too)
+func GetPayload(firebase string) interface{} {
+	//localDate := time.Now().Local()
+	f := firego.New(firebase, nil)
+	var raw map[string]interface{}
+	var fData map[string]interface{}
+	if err := f.Value(&raw); err != nil {
+		log.Fatalf("Error getting firebase data: %v", err)
+	}
+	marshaled, err := json.Marshal(raw)
+	if err != nil {
+		log.Fatalf("Failed to marshal: %v, %v", raw, err)
+	}
+	//I don't know why I need to unmarshal and marshal the data but it only works like this..
+	//FIX THIS
+	if err := json.Unmarshal(marshaled, &fData); err != nil {
+		log.Fatalf("Failed to Unmarshal: %v, %v", marshaled, err)
+	}
+
+	var v interface{}
+	for _, val := range fData {
+		vmap, ok := val.(map[string]interface{})
+		if !ok {
+			//fmt.Println(val) *debugging*
+			continue
+		}
+
+		//field := localDate.Format("01-02-2006")
+		field := "TestData" //For tests
+		//This field variable is for fetching data with this specific prefix (temp, date, etc..)
+		//Will make this a parameter for people to call
+		if v, ok := vmap[field]; ok {
+			return v
+			//fmt.Println(v) *debugging*
+		}
+
+	}
+
+	return v
+
 }
 
 //These are for setting payload data
