@@ -26,7 +26,7 @@ func (p *Payload) PrintPayload() {
 }
 
 //For fetching firebase data (Make it return an err too)
-func GetPayload(firebase string) interface{} {
+func GetPayload(firebase, field string) interface{} {
 	//localDate := time.Now().Local()
 	f := firego.New(firebase, nil)
 	var raw map[string]interface{}
@@ -53,7 +53,6 @@ func GetPayload(firebase string) interface{} {
 		}
 
 		//field := localDate.Format("01-02-2006")
-		field := "TestData" //For tests
 		//This field variable is for fetching data with this specific prefix (temp, date, etc..)
 		//Will make this a parameter for people to call
 		if v, ok := vmap[field]; ok {

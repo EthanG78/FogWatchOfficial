@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/EthanG78/fog_watch/payload"
 	"html/template"
 	"log"
 	"net/http"
@@ -17,7 +18,7 @@ var FuncMap = template.FuncMap{
 }
 
 //This struct will be removed in the future
-type payload struct {
+type testPayload struct {
 	Date string
 	/*
 		Location string
@@ -30,7 +31,7 @@ type payload struct {
 
 func index(w http.ResponseWriter, r *http.Request) {
 	currentTime := time.Now().Local()
-	toSend := payload{
+	toSend := testPayload{
 		Date:   currentTime.Format("01-02-2006"),
 		Status: "Active",
 	}
@@ -60,7 +61,7 @@ func partners(w http.ResponseWriter, r *http.Request) {
 
 func monitorStatus(w http.ResponseWriter, r *http.Request) {
 	currentTime := time.Now().Local()
-	toSend := payload{
+	toSend := testPayload{
 		Date:   currentTime.Format("01-02-2006"),
 		Status: "Active",
 	}
@@ -73,6 +74,12 @@ func monitorStatus(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	templates = templates.Funcs(FuncMap)
+
+	//FOR TESTING API
+	firebase := "https://fogwatch-45fe5.firebaseio.com/"
+	field := "TestData"
+	data := payload.GetPayload(firebase, field)
+	log.Println(data)
 
 	http.Handle("/media/", http.StripPrefix("/media/", http.FileServer(http.Dir("static/media"))))
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("static/js"))))

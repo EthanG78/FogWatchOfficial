@@ -33,9 +33,10 @@ func TestPayload(t *testing.T) {
 
 func TestPayloadRetrieval(t *testing.T) {
 	firebase := "https://fogwatch-45fe5.firebaseio.com/"
-	//nildata := map[string]interface{}{}
-	data := payload.GetPayload(firebase)
-	//assert.Equal(t, nildata, data)
+	field := "TestData"
+	data := payload.GetPayload(firebase, field)
+
+	//Tests to see if map returned is nil or not
 	if assert.NotNil(t, data, "Checks if GetPayload succesfully fetched firebase data") {
 		t.Log(data)
 		//Debugging
