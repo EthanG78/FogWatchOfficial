@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"gopkg.in/zabawaba99/firego.v1"
 	"log"
-	//"time" Will be used to get local date
+	//"time"
 )
 
 type Payload struct {
@@ -17,22 +17,19 @@ type Payload struct {
 	Status   string
 }
 
-//This map will keep the paylod data along with it's unique Key
-//data := make(map[string]Payload)
-
 //For printing all data
 func (p *Payload) PrintPayload() {
 	fmt.Printf("Date: %v\nLocation: %v\nTemperature: %v\nHumidity: %v\nWind Speed: %v\nStatus: %v/n", p.Date, p.Location, p.Temp, p.Humidity, p.WindS, p.Status)
 }
 
-//For fetching firebase data (Make it return an err too)
-func GetPayload(firebase, field string) interface{} {
+//For fetching entire firebase data (Make it return an err too)
+func GetPayload(firebase, key string) interface{} {
+	//localDate := time.Now().Local()
 
 	var unmData map[string]interface{}
 	var mData map[string]interface{}
 	var fData interface{}
 
-	//localDate := time.Now().Local()
 	f := firego.New(firebase, nil)
 
 	if err := f.Value(&unmData); err != nil {
@@ -59,7 +56,7 @@ func GetPayload(firebase, field string) interface{} {
 		//field := localDate.Format("01-02-2006")
 		//This field variable is for fetching data with this specific prefix (temp, date, etc..)
 		//Will make this a parameter for people to call
-		if fData, ok := vmap[field]; ok {
+		if fData, ok := vmap[key]; ok {
 			return fData
 			//fmt.Println(v) *debugging*
 		}
@@ -67,6 +64,61 @@ func GetPayload(firebase, field string) interface{} {
 	}
 
 	return fData
+
+}
+
+//For fetching individual information from firebase
+func GetPayloadField(firebase, key, field string) string {
+	//localDate := time.Now().Local()
+
+	var unmData map[string]interface{}
+	var mData map[string]interface{}
+	var valField string
+
+	f := firego.New(firebase, nil)
+
+	if err := f.Value(&unmData); err != nil {
+		log.Fatalf("Error retrieving firebase data: %v", err)
+	}
+
+	marshaled, err := json.Marshal(unmData)
+	if err != nil {
+		log.Fatalf("Failed to marshal: %v, %v", unmData, err)
+	}
+
+	if err := json.Unmarshal(marshaled, &mData); err != nil {
+		log.Fatalf("Failed to Unmarshal: %v, %v", marshaled, err)
+	}
+
+	for _, valKey := range mData {
+		keyMap, ok := valKey.(map[string]interface{})
+		if !ok {
+			continue
+		}
+		//field := localDate.Format("01-02-2006")
+		//This field variable is for fetching data with this specific prefix (temp, date, etc..)
+		//Will make this a parameter for people to call
+		if keyData, ok := keyMap[key]; ok {
+			fieldMap, ok := keyData.(map[string]interface{})
+			if !ok {
+				continue
+			}
+			for indexField, valField := range fieldMap {
+
+				if indexField == field {
+					//Make sure valField is a string
+					valField, ok := valField.(string)
+					if !ok {
+						continue
+					}
+					return valField
+				}
+			}
+		}
+
+	}
+
+	return valField
 
 }
 

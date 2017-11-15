@@ -69,9 +69,13 @@ func main() {
 
 	//FOR TESTING API
 	firebase := "https://fogwatch-45fe5.firebaseio.com/"
-	field := "TestData"
-	data := payload.GetPayload(firebase, field)
+	key := "11-14-2017 - 21:18:57"
+	field := "Temp"
+	data := payload.GetPayload(firebase, key)
+	dataField := payload.GetPayloadField(firebase, key, field)
 	log.Println(data)
+	log.Println(dataField)
+	//////////////////////
 
 	http.Handle("/media/", http.StripPrefix("/media/", http.FileServer(http.Dir("static/media"))))
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("static/js"))))
