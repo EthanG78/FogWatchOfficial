@@ -17,24 +17,14 @@ var FuncMap = template.FuncMap{
 	},
 }
 
-//This struct will be removed in the future
-type testPayload struct {
-	Date string
-	/*
-		Location string
-		Temp     string
-		Humidity string
-		Wind     string
-	*/
-	Status string
-}
-
 func index(w http.ResponseWriter, r *http.Request) {
 	currentTime := time.Now().Local()
-	toSend := testPayload{
-		Date:   currentTime.Format("01-02-2006"),
-		Status: "Active",
-	}
+
+	//Now using API calls
+	toSend := payload.Payload{}
+	toSend.SetDate(currentTime.Format("01-02-2006"))
+	toSend.SetStatus("Active")
+
 	t, err := template.ParseFiles("static/index.html")
 	if err != nil {
 		log.Fatalf("Error parsing template: %v", err)
@@ -61,10 +51,12 @@ func partners(w http.ResponseWriter, r *http.Request) {
 
 func monitorStatus(w http.ResponseWriter, r *http.Request) {
 	currentTime := time.Now().Local()
-	toSend := testPayload{
-		Date:   currentTime.Format("01-02-2006"),
-		Status: "Active",
-	}
+
+	//API CALLS
+	toSend := payload.Payload{}
+	toSend.SetDate(currentTime.Format("01-02-2006"))
+	toSend.SetStatus("Active")
+
 	t, err := template.ParseFiles("static/status.html")
 	if err != nil {
 		log.Fatalf("Error parsing template: %v", err)
