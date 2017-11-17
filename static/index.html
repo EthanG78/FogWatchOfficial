@@ -179,13 +179,19 @@
                         <thead>
                             <tr>
                                 <th>
-                                #
-                                </th>
-                                <th>
                                     Position
                                 </th>
                                 <th>
                                     Last Updated
+                                </th>
+                                <th>
+                                    Temperature
+                                </th>
+                                <th>
+                                    Humidity
+                                </th>
+                                <th>
+                                    WindSpeed
                                 </th>
                                 <th>
                                     Status
@@ -195,13 +201,19 @@
                         <tbody>
                             <tr {{if eq .Status "Active"}} class="success" {{else}} class="danger" {{end}} id="west" style="display:none;">
                                 <td>
-                                    1
+                                    {{.Location}}
                                 </td>
                                 <td>
-                                    Saint-John West
+                                    {{.Date}}
                                 </td>
                                 <td>
-                                    {{ .Date }}
+                                    {{ .Temp }}
+                                </td>
+                                <td>
+                                    {{ .Humidity }}
+                                </td>
+                                <td>
+                                    {{ .WindS }}
                                 </td>
                                 <td>
                                     {{ .Status }}
@@ -209,36 +221,50 @@
                             </tr>
                             <tr {{if eq .Status "Active"}} class="success" {{else}} class="danger" {{end}} id="east" style="display:none;">
                                 <td>
-                                    2
+                                    {{.Location}}
                                 </td>
                                 <td>
-                                    Saint-John East
+                                    {{.Date}}
                                 </td>
                                 <td>
-                                    {{ .Date }}
+                                    {{ .Temp }}
                                 </td>
                                 <td>
-                                    {{ .Status}}
-                                </td>
-                            </tr>
-                            <tr {{if eq .Status "Active"}} class="success" {{else}} class="danger" {{end}} id="uptown" style="display:none;">
-                                <td>
-                                    3
+                                    {{ .Humidity }}
                                 </td>
                                 <td>
-                                    Uptown Saint-John 
-                                </td>
-                                <td>
-                                    {{ .Date }}
+                                    {{ .WindS }}
                                 </td>
                                 <td>
                                     {{ .Status }}
                                 </td>
+
+                            </tr>
+                            <tr {{if eq .Status "Active"}} class="success" {{else}} class="danger" {{end}} id="uptown" style="display:none;">
+                                <td>
+                                    {{.Location}}
+                                </td>
+                                <td>
+                                    {{.Date}}
+                                </td>
+                                <td>
+                                    {{ .Temp }}
+                                </td>
+                                <td>
+                                    {{ .Humidity }}
+                                </td>
+                                <td>
+                                    {{ .WindS }}
+                                </td>
+                                <td>
+                                    {{ .Status }}
+                                </td>
+
                             </tr>
                         </tbody>
                     </table>
                     <hr>
-                    <h3>Other stuff</h3>
+                    <h3><input type="image" src="media/Refresh_icon.png" id="refresh" name="refresh" height="20px;"></h3>
                 </div>
                 <div class="col-sm-2 sidenav">
                     <div class="well">
@@ -259,36 +285,15 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <!--Page Footer-->
         <footer class="container-fluid text-center">
             <p>Made with <3 by the E^2 Team</p>
         </footer>
 
         <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript">
+            
+        </script>
     
     </body>
 </html>

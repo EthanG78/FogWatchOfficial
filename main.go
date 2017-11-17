@@ -8,6 +8,10 @@ import (
 	"time"
 )
 
+const (
+	firebase = "https://fogwatch-45fe5.firebaseio.com/"
+)
+
 var templates = template.Must(template.ParseGlob("static/*.html"))
 
 //For if statements in templates
@@ -18,12 +22,15 @@ var FuncMap = template.FuncMap{
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	currentTime := time.Now().Local()
-
-	//Now using API calls
-	toSend := payload.Payload{}
-	toSend.SetDate(currentTime.Format("01-02-2006"))
-	toSend.SetStatus("Active")
+	//Will eventually remove all of this
+	toSend := payload.Payload{
+		Date:     payload.GetPayloadField(firebase, "TestData", "Date"),
+		Location: payload.GetPayloadField(firebase, "TestData", "Location"),
+		Temp:     payload.GetPayloadField(firebase, "TestData", "Temp"),
+		Humidity: payload.GetPayloadField(firebase, "TestData", "Humidity"),
+		WindS:    payload.GetPayloadField(firebase, "TestData", "WindS"),
+		Status:   payload.GetPayloadField(firebase, "TestData", "Status"),
+	}
 
 	t, err := template.ParseFiles("static/index.html")
 	if err != nil {
@@ -66,16 +73,6 @@ func monitorStatus(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	templates = templates.Funcs(FuncMap)
-
-	//FOR TESTING API
-	firebase := "https://fogwatch-45fe5.firebaseio.com/"
-	key := "11-14-2017 - 21:18:57"
-	field := "Temp"
-	data := payload.GetPayload(firebase, key)
-	dataField := payload.GetPayloadField(firebase, key, field)
-	log.Println(data)
-	log.Println(dataField)
-	//////////////////////
 
 	http.Handle("/media/", http.StripPrefix("/media/", http.FileServer(http.Dir("static/media"))))
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("static/js"))))
