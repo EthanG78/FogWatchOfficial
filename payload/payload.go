@@ -22,49 +22,16 @@ func (p *Payload) PrintPayload() {
 	fmt.Printf("Date: %v\nLocation: %v\nTemperature: %v\nHumidity: %v\nWind Speed: %v\nStatus: %v/n", p.Date, p.Location, p.Temp, p.Humidity, p.WindS, p.Status)
 }
 
-//For fetching entire firebase data (Make it return an err too)
-func GetPayload(firebase, key string) interface{} {
-	//localDate := time.Now().Local()
-
-	var unmData map[string]interface{}
-	var mData map[string]interface{}
-	var fData interface{}
-
-	f := firego.New(firebase, nil)
-
-	if err := f.Value(&unmData); err != nil {
-		log.Fatalf("Error retrieving firebase data: %v", err)
+func GetPayload(firebase, key string) Payload {
+	payload := Payload{
+		Date:     GetPayloadField(firebase, key, "Date"),
+		Location: GetPayloadField(firebase, key, "Location"),
+		Temp:     GetPayloadField(firebase, key, "Temp"),
+		Humidity: GetPayloadField(firebase, key, "Humidity"),
+		WindS:    GetPayloadField(firebase, key, "WindS"),
+		Status:   GetPayloadField(firebase, key, "Status"),
 	}
-
-	marshaled, err := json.Marshal(unmData)
-	if err != nil {
-		log.Fatalf("Failed to marshal: %v, %v", unmData, err)
-	}
-	//I don't know why I need to unmarshal and marshal the data but it only works like this..
-	//FIX THIS
-	if err := json.Unmarshal(marshaled, &mData); err != nil {
-		log.Fatalf("Failed to Unmarshal: %v, %v", marshaled, err)
-	}
-
-	for _, val := range mData {
-		vmap, ok := val.(map[string]interface{})
-		if !ok {
-			//fmt.Println(val) *debugging*
-			continue
-		}
-
-		//field := localDate.Format("01-02-2006")
-		//This field variable is for fetching data with this specific prefix (temp, date, etc..)
-		//Will make this a parameter for people to call
-		if fData, ok := vmap[key]; ok {
-			return fData
-			//fmt.Println(v) *debugging*
-		}
-
-	}
-
-	return fData
-
+	return payload
 }
 
 //For fetching individual information from firebase

@@ -25,14 +25,7 @@ var FuncMap = template.FuncMap{
 
 func index(w http.ResponseWriter, r *http.Request) {
 	//Will eventually remove all of this
-	toSend := payload.Payload{
-		Date:     payload.GetPayloadField(firebase, "TestData", "Date"),
-		Location: payload.GetPayloadField(firebase, "TestData", "Location"),
-		Temp:     payload.GetPayloadField(firebase, "TestData", "Temp"),
-		Humidity: payload.GetPayloadField(firebase, "TestData", "Humidity"),
-		WindS:    payload.GetPayloadField(firebase, "TestData", "WindS"),
-		Status:   payload.GetPayloadField(firebase, "TestData", "Status"),
-	}
+	toSend := payload.GetPayload(firebase, "TestData")
 
 	t, err := template.ParseFiles("static/index.html")
 	if err != nil {
@@ -43,14 +36,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 //For AJAX update
 func updatePayload(w http.ResponseWriter, r *http.Request) {
-	updatedPayload := payload.Payload{
-		Date:     payload.GetPayloadField(firebase, "TestData", "Date"),
-		Location: payload.GetPayloadField(firebase, "TestData", "Location"),
-		Temp:     payload.GetPayloadField(firebase, "TestData", "Temp"),
-		Humidity: payload.GetPayloadField(firebase, "TestData", "Humidity"),
-		WindS:    payload.GetPayloadField(firebase, "TestData", "WindS"),
-		Status:   payload.GetPayloadField(firebase, "TestData", "Status"),
-	}
+	updatedPayload := payload.GetPayload(firebase, "TestData")
 
 	data, err := json.Marshal(updatedPayload)
 	if err != nil {
