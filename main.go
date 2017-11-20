@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/EthanG78/fog_watch/payload"
 	"html/template"
 	"log"
@@ -37,6 +39,25 @@ func index(w http.ResponseWriter, r *http.Request) {
 		log.Fatalf("Error parsing template: %v", err)
 	}
 	t.Execute(w, toSend)
+}
+
+//For AJAX update
+func updatePayload(w http.ResponseWriter, r *http.Request) {
+	updatedPayload := payload.Payload{
+		Date:     payload.GetPayloadField(firebase, "TestData", "Date"),
+		Location: payload.GetPayloadField(firebase, "TestData", "Location"),
+		Temp:     payload.GetPayloadField(firebase, "TestData", "Temp"),
+		Humidity: payload.GetPayloadField(firebase, "TestData", "Humidity"),
+		WindS:    payload.GetPayloadField(firebase, "TestData", "WindS"),
+		Status:   payload.GetPayloadField(firebase, "TestData", "Status"),
+	}
+
+	data, err := json.Marshal(updatedPayload)
+	if err != nil {
+		fmt.Println(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	w.Write(data)
 }
 
 //Just for serving static files
@@ -78,6 +99,7 @@ func main() {
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("static/js"))))
 
 	http.HandleFunc("/", index)
+	http.HandleFunc("/update", updatePayload)
 	http.HandleFunc("/about.html", about)
 	http.HandleFunc("/partners.html", partners)
 	http.HandleFunc("/status.html", monitorStatus)

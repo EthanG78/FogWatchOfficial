@@ -15,7 +15,6 @@ window.onclick = function(e) {
 };
 
 document.getElementById('showWest').onclick=function(){
-  //document.getElementById('west').style.display='';
   if (document.getElementById('west').style.display == "none"){
     document.getElementById('west').style.display='';
   }else{
@@ -24,25 +23,6 @@ document.getElementById('showWest').onclick=function(){
 
 };
 
-document.getElementById('showEast').onclick=function(){
-  //document.getElementById('west').style.display='';
-  if (document.getElementById('east').style.display == "none"){
-    document.getElementById('east').style.display='';
-  }else{
-    document.getElementById('east').style.display='none';
-  };
-
-};
-
-document.getElementById('showUptown').onclick=function(){
-  //document.getElementById('west').style.display='';
-  if (document.getElementById('uptown').style.display == "none"){
-    document.getElementById('uptown').style.display='';
-  }else{
-    document.getElementById('uptown').style.display='none';
-  };
-
-};
 
 
 
