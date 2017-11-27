@@ -7,7 +7,7 @@ import (
 )
 
 //This is to test if allocating new data through Payload methods works.
-func TestPayload(t *testing.T) {
+func TestPayloadMethods(t *testing.T) {
 	data := payload.Payload{}
 
 	//This is the test payload that will be compared with actual^^
@@ -44,3 +44,31 @@ func TestPayloadRetrieval(t *testing.T) {
 		t.Error("Failed to fetch data from firebase")
 	}
 }
+
+func TestPayload(t *testing.T) {
+	firebase := "https://fogwatch-45fe5.firebaseio.com/"
+	key := "TestData"
+
+	date := payload.GetPayloadField(firebase, key, "Date")
+	assert.Equal(t, "11-14-2017", date)
+
+	humidity := payload.GetPayloadField(firebase, key, "Humidity")
+	assert.Equal(t, "100%", humidity)
+
+	location := payload.GetPayloadField(firebase, key, "Location")
+	assert.Equal(t, "Uptown", location)
+
+	status := payload.GetPayloadField(firebase, key, "Status")
+	assert.Equal(t, "Active", status)
+
+	temp := payload.GetPayloadField(firebase, key, "Temp")
+	assert.Equal(t, "20", temp)
+
+	windspeed := payload.GetPayloadField(firebase, key, "WindS")
+	assert.Equal(t, "8km/h", windspeed)
+
+
+
+}
+
+//Continue Test
