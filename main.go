@@ -83,6 +83,7 @@ func main() {
 
 	http.Handle("/media/", http.StripPrefix("/media/", http.FileServer(http.Dir("static/media"))))
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("static/js"))))
+	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("static/css"))))
 
 	http.HandleFunc("/", index)
 	http.HandleFunc("/update", updatePayload)

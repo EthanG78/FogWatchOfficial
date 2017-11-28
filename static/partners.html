@@ -12,7 +12,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <!--Index stylesheet-->
-        <!-- <link href="../css/index.css" rel="stylesheet"> -->
+        <link rel="stylesheet" type="text/css" href="css/app.css">
 
         <!--Jquery-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -31,8 +31,6 @@
                 margin-bottom: 0;
                 border-radius: 0;
             }
-
-
 
             /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
             .row.content {height: 450px}
@@ -53,12 +51,7 @@
               font-size: 25px;
             }
 
-            /* Set black background color, white text and some padding */
-            footer {
-              background-color: #555;
-              color: white;
-              padding: 15px;
-            }
+          
 
             header {
               background-image: url("media/jumbotron-bg.png");
@@ -111,10 +104,49 @@
 
 
 
-           <!--Page Footer-->
+        <!--  
         <footer class="container-fluid text-center">
             <p>Made with <3 by the E^2 Team</p>
+        </footer> -->
+
+
+
+        <footer>
+          <div class="centered clearfix">
+            <div class="footer-logo">
+              <a href="https://www.facebook.com/" class="facebook">
+                  <img src="media/fb_icon.png" height="40" style="margin-top: 60px; margin-left: 25px;">
+                </a>
+                <a href="https://twitter.com/" class="twitter">
+                  <img src="media/tw_icon.png" height="40" style="margin-top: 60px;">
+                </a>
+            </div>
+
+            <div class="footer-contact">
+               <h3><a href="">Contact</a></h3>
+               <p><a href="mailto:">esquared.sj@gmail.com</a></p>
+               <p><a href="tel:">506-647-0217</a></p>
+               <p><a href="">1 Germain Street Suite 300<br />Saint John, NB E2L 4V1</a></p>
+            </div>
+            <!-- <div class="footer-navigation">
+            </div> -->
+          </div>
+          <div class="bottom-bar">
+              | ESquared © 2017 |
+          </div>
         </footer>
+
+
+
+
+
+        <script type="text/javascript">
+          $(function() {
+            $('.footer-links-holder h3').click(function () {
+              $(this).parent().toggleClass('active');
+            });
+          });
+        </script>
     
     </body>
 </html>
