@@ -14,6 +14,10 @@ const (
 	firebase = "https://fogwatch-45fe5.firebaseio.com/"
 )
 
+time.LoadLocation("AST")
+
+dataKey = time.Now().Format("01-02-2006:15") //Fetching data in this format (m-d-y:hour)
+
 var templates = template.Must(template.ParseGlob("static/*.html"))
 
 //For if statements in templates
@@ -25,7 +29,7 @@ var FuncMap = template.FuncMap{
 
 func index(w http.ResponseWriter, r *http.Request) {
 	//Will eventually remove all of this
-	toSend := payload.GetPayload(firebase, "TestData")
+	toSend := payload.GetPayload(firebase, dataKey)
 
 	t, err := template.ParseFiles("static/index.html")
 	if err != nil {
@@ -36,7 +40,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 //For AJAX update
 func updatePayload(w http.ResponseWriter, r *http.Request) {
-	updatedPayload := payload.GetPayload(firebase, "TestData")
+	updatedPayload := payload.GetPayload(firebase, dataKey) 
 
 	data, err := json.Marshal(updatedPayload)
 	if err != nil {

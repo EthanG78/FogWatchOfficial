@@ -52,11 +52,11 @@ def read_temp():
 #This will be the payload of data being sent to firebase
 payload = {
 	"Date/": now.strftime("%m-%d-%Y"),
-	"Location/": "Uptown Saint-John"
+	"Location/": "Uptown Saint-John",
 	"Temp/": read_temp(),
 	"Humidity/": "{0:.1f}%".format(hum),
-	"WindS/": "N/A"
+	"WindS/": "N/A",
 	"Status/": "Active",
 }
 
-results = firebase.patch("/prototype/UptownSJ/" + now.strftime("%H:%M:%S"),payload)
+results = firebase.patch("/prototype/UptownSJ/" + now.strftime("%m-%d-%Y:%H"),payload)
