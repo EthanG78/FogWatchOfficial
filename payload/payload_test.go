@@ -68,7 +68,6 @@ func TestPayload(t *testing.T) {
 	assert.Equal(t, "8km/h", windspeed)
 
 
-
 }
 
 //Continue Test
