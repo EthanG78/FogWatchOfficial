@@ -94,6 +94,10 @@ typings/
 # sftp configuration file
 sftp-config.json
 
+### Sass ###
+.sass-cache/
+*.css.map
+
 # Package control specific files
 Package Control.last-run
 Package Control.ca-list
