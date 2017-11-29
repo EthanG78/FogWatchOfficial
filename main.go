@@ -14,10 +14,6 @@ const (
 	firebase = "https://fogwatch-45fe5.firebaseio.com/"
 )
 
-time.LoadLocation("AST")
-
-dataKey = time.Now().Format("01-02-2006:15") //Fetching data in this format (m-d-y:hour)
-
 var templates = template.Must(template.ParseGlob("static/*.html"))
 
 //For if statements in templates
@@ -28,6 +24,8 @@ var FuncMap = template.FuncMap{
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
+	dataKey := time.Now().Format("01-02-2006:15") //Fetching data in this format (m-d-y:hour)
+	log.Println(dataKey)
 	//Will eventually remove all of this
 	toSend := payload.GetPayload(firebase, dataKey)
 
@@ -40,7 +38,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 //For AJAX update
 func updatePayload(w http.ResponseWriter, r *http.Request) {
-	updatedPayload := payload.GetPayload(firebase, dataKey) 
+	dataKey := time.Now().Format("01-02-2006:15")
+	updatedPayload := payload.GetPayload(firebase, dataKey)
 
 	data, err := json.Marshal(updatedPayload)
 	if err != nil {
@@ -83,6 +82,7 @@ func monitorStatus(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	time.LoadLocation("AST")
 	templates = templates.Funcs(FuncMap)
 
 	http.Handle("/media/", http.StripPrefix("/media/", http.FileServer(http.Dir("static/media"))))
