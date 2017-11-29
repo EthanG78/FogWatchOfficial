@@ -56,4 +56,4 @@ payload = {
 	"Status/": "Active",
 }
 
-results = firebase.patch("/prototype/UptownSJ/" + now.strftime("%H:%M:%S"),data)
+results = firebase.patch("/prototype/UptownSJ/" + now.strftime("%H:%M:%S"),payload)
