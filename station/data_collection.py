@@ -8,7 +8,7 @@ import datetime
 from firebase import firebase
 
 #Setting local timezone
-tz = ytz.timezone('America/Moncton')
+tz = pytz.timezone('America/Moncton')
 now = datetime.datetime.now(tz)
 firebase = firebase.FirebaseApplication("https://fogwatch-45fe5.firebaseio.com", None)
 
