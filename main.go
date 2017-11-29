@@ -25,7 +25,6 @@ var FuncMap = template.FuncMap{
 
 func index(w http.ResponseWriter, r *http.Request) {
 	dataKey := time.Now().Format("01-02-2006:15") //Fetching data in this format (m-d-y:hour)
-	log.Println(dataKey)
 	//Will eventually remove all of this
 	toSend := payload.GetPayload(firebase, dataKey)
 

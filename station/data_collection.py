@@ -51,7 +51,7 @@ def read_temp():
 
 #This will be the payload of data being sent to firebase
 payload = {
-	"Date/": now.strftime("%m-%d-%Y"),
+	"Date/": now.strftime('%I:%M:%S %p'),
 	"Location/": "Uptown Saint-John",
 	"Temp/": read_temp(),
 	"Humidity/": "{0:.1f}%".format(hum),
