@@ -14,16 +14,17 @@ firebase = firebase.FirebaseApplication("https://fogwatch-45fe5.firebaseio.com",
 
 #Configuring DHT22 humidity sensor
 sensor = Adafruit_DHT.DHT22
-pin = 22
-hum,temp = Adafruit_DHT.read_retry(sensor,pin)
+pin = 22 #Wiring pi pin 3
+#The DHT22 will only be used for humidity and maybe internal temo
+hum,internalTemp = Adafruit_DHT.read_retry(sensor,pin)
 
 
 #This will be the payload of data being sent to firebase
 payload = {
 	"Date/": now.strftime("%m-%d-%Y"),
-	"Temperature/": "{0:.1f}*C".format(temp),
-	"Humidity/": "{0:.1f}%".format(hum),
+	
+	"Humidity/": "{0:.1f}%".format(hum), 
 	"Status/": "Active",
 }
 
-results = firebase.path("/prototype/UptownSJ/" + now.strftime("%H:%M:%S"),data)
+results = firebase.patch("/prototype/UptownSJ/" + now.strftime("%H:%M:%S"),data)
