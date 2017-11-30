@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/EthanG78/fog_watch/payload"
+	"github.com/EthanG78/FogWatchOfficial/payload"
 	"html/template"
 	"log"
 	"net/http"
@@ -95,8 +95,8 @@ func main() {
 	http.HandleFunc("/partners.html", partners)
 	http.HandleFunc("/status.html", monitorStatus)
 
-	log.Println("Now serving on localhost:8080")
-	log.Fatal(http.ListenAndServe("localhost:8080", nil))
+	log.Println("Now serving on port 8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 //TODO: Design how to present the firebase data on the site using payload struct

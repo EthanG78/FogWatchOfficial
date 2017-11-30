@@ -1,7 +1,7 @@
 package payload_test
 
 import (
-	"github.com/EthanG78/fog_watch/payload"
+	"github.com/EthanG78/FogWatchOfficial/payload"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -66,7 +66,6 @@ func TestPayload(t *testing.T) {
 
 	windspeed := payload.GetPayloadField(firebase, key, "WindS")
 	assert.Equal(t, "8km/h", windspeed)
-
 
 }
 
