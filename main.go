@@ -95,8 +95,8 @@ func main() {
 	http.HandleFunc("/partners.html", partners)
 	http.HandleFunc("/status.html", monitorStatus)
 
-	log.Println("Now serving on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	//log.Println("Now serving on port 8081")
+	log.Fatal(http.ListenAndServe(":8001", nil))
 }
 
 //TODO: Design how to present the firebase data on the site using payload struct
