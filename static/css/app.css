@@ -1,9 +1,9 @@
+html,
 body{
+  height: 100%;
+  margin: 0;
+  padding: 0;
   min-width: 1100px;
-}
-.navbar {
-    margin-bottom: 0;
-    border-radius: 0;
 }
 
 /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
@@ -24,12 +24,11 @@ body{
 .sideHeader{
   font-size: 25px;
 }
-s
+
 footer {
   background: #191919;
   color: #fff;
   margin: 0;
-  /*@import "https://fonts.googleapis.com/css?family=Open+Sans";*/
   font-family: 'Open Sans', sans-serif; }
   footer .centered {
     max-width: 1200px;
@@ -46,7 +45,7 @@ footer {
     footer .centered .footer-navigation {
       width: 60%; }
   footer .bottom-bar {
-    position: relative;
+    position: relative;  
     text-align: center;
     font-size: .8em;
     text-transform: uppercase;
@@ -100,8 +99,6 @@ footer a {
   height: 0;
   clear: both; }
 
-body {
-  margin: 0; }
 
 * {
   -moz-box-sizing: border-box;
