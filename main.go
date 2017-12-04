@@ -65,6 +65,14 @@ func partners(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, nil)
 }
 
+func privact_policy(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("static/privacypolicy.html")
+	if err != nil {
+		log.Fatalf("Error parsing template: %v", err)
+	}
+	t.Execute(w, nil)
+}
+
 func main() {
 	time.LoadLocation("AST")
 	templates = templates.Funcs(FuncMap)
@@ -78,6 +86,7 @@ func main() {
 	http.HandleFunc("/update", updatePayload)
 	http.HandleFunc("/about.html", about)
 	http.HandleFunc("/partners.html", partners)
+	http.HandleFunc("/privacy.html", privact_policy)
 	log.Println("Now serving on port 8080")
 	log.Fatal(http.ListenAndServe("localhost:8080", nil))
 }
