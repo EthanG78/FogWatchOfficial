@@ -48,13 +48,18 @@ def read_temp():
 		final = str(temp_c) + "*C"
 		return final 
 
+def isHumidity(humidityData):
+	if type(humidityData) == float:
+		return "{0:.1f}%".format(humidityData)
+	elif:
+		return "error"
 
 #This will be the payload of data being sent to firebase
 payload = {
 	"Date/": now.strftime('%I:%M:%S %p'),
 	"Location/": "Uptown Saint-John",
 	"Temp/": read_temp(),
-	"Humidity/": "{0:.1f}%".format(hum),
+	"Humidity/": isHumidity(hum)
 	"WindS/": "N/A",
 	"Status/": "Active",
 }
