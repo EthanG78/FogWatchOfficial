@@ -65,21 +65,6 @@ func partners(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, nil)
 }
 
-func monitorStatus(w http.ResponseWriter, r *http.Request) {
-	currentTime := time.Now().Local()
-
-	//API CALLS
-	toSend := payload.Payload{}
-	toSend.SetDate(currentTime.Format("01-02-2006"))
-	toSend.SetStatus("Active")
-
-	t, err := template.ParseFiles("static/status.html")
-	if err != nil {
-		log.Fatalf("Error parsing template: %v", err)
-	}
-	t.Execute(w, toSend)
-}
-
 func main() {
 	time.LoadLocation("AST")
 	templates = templates.Funcs(FuncMap)
@@ -93,10 +78,6 @@ func main() {
 	http.HandleFunc("/update", updatePayload)
 	http.HandleFunc("/about.html", about)
 	http.HandleFunc("/partners.html", partners)
-	http.HandleFunc("/status.html", monitorStatus)
-
-	//log.Println("Now serving on port 8081")
+	log.Println("Now serving on port 8080")
 	log.Fatal(http.ListenAndServe("localhost:8080", nil))
 }
-
-//TODO: Design how to present the firebase data on the site using payload struct
