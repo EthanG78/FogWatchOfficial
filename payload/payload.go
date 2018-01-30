@@ -3,9 +3,11 @@ package payload
 import (
 	"encoding/json"
 	"fmt"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 	"gopkg.in/zabawaba99/firego.v1"
+	"io/ioutil"
 	"log"
-	//"time"
 )
 
 type Payload struct {
@@ -23,38 +25,77 @@ func (p *Payload) PrintPayload() {
 }
 
 func GetPayload(firebase, key string) Payload {
+	date, err := GetPayloadField(firebase, key, "Date")
+	if err != nil {
+		log.Fatalf("Error fetching data: %v", err)
+	}
+	location, err := GetPayloadField(firebase, key, "Location")
+	if err != nil {
+		log.Fatalf("Error fetching data: %v", err)
+	}
+	temp, err := GetPayloadField(firebase, key, "Temp")
+	if err != nil {
+		log.Fatalf("Error fetching data: %v", err)
+	}
+	humidity, err := GetPayloadField(firebase, key, "Humidity")
+	if err != nil {
+		log.Fatalf("Error fetching data: %v", err)
+	}
+	wind, err := GetPayloadField(firebase, key, "WindS")
+	if err != nil {
+		log.Fatalf("Error fetching data: %v", err)
+	}
+	status, err := GetPayloadField(firebase, key, "Status")
+	if err != nil {
+		log.Fatalf("Error fetching data: %v", err)
+	}
 	payload := Payload{
-		Date:     GetPayloadField(firebase, key, "Date"),
-		Location: GetPayloadField(firebase, key, "Location"),
-		Temp:     GetPayloadField(firebase, key, "Temp"),
-		Humidity: GetPayloadField(firebase, key, "Humidity"),
-		WindS:    GetPayloadField(firebase, key, "WindS"),
-		Status:   GetPayloadField(firebase, key, "Status"),
+		Date:     date,
+		Location: location,
+		Temp:     temp,
+		Humidity: humidity,
+		WindS:    wind,
+		Status:   status,
 	}
 	return payload
 }
 
 //For fetching individual information from firebase
-func GetPayloadField(firebase, key, field string) string {
+func GetPayloadField(firebase, key, field string) (string, error) {
 	//localDate := time.Now().Local()
 
 	var unmData map[string]interface{}
 	var mData map[string]interface{}
 	var valField string
 
-	f := firego.New(firebase, nil)
+	//For webapp authentification
+	d, err := ioutil.ReadFile("payload/service_account.json")
+	if err != nil {
+		return "", err
+	}
+
+	conf, err := google.JWTConfigFromJSON(d, "https://www.googleapis.com/auth/userinfo.email",
+		"https://www.googleapis.com/auth/firebase.database")
+	if err != nil {
+		return "", err
+	}
+
+	f := firego.New(firebase, conf.Client(oauth2.NoContext))
 
 	if err := f.Value(&unmData); err != nil {
 		log.Fatalf("Error retrieving firebase data: %v", err)
+		return "", err
 	}
 
 	marshaled, err := json.Marshal(unmData)
 	if err != nil {
 		log.Fatalf("Failed to marshal: %v, %v", unmData, err)
+		return "", err
 	}
 
 	if err := json.Unmarshal(marshaled, &mData); err != nil {
 		log.Fatalf("Failed to Unmarshal: %v, %v", marshaled, err)
+		return "", err
 	}
 
 	for _, valKey := range mData {
@@ -78,14 +119,14 @@ func GetPayloadField(firebase, key, field string) string {
 					if !ok {
 						continue
 					}
-					return valField
+					return valField, nil
 				}
 			}
 		}
 
 	}
 
-	return valField
+	return valField, nil
 
 }
 
