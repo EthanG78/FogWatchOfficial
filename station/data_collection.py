@@ -7,12 +7,15 @@ import glob
 import json
 import pytz
 import datetime
+import globalvars
 from firebase import firebase
 
 #Setting local timezone
 tz = pytz.timezone('America/Moncton')
-now = datetime.datetime.now(tz)
-firebase = firebase.FirebaseApplication("https://fogwatch-45fe5.firebaseio.com", None)
+now = datetime.datetime.now(tz) 
+
+authentication = firebase.FirebaseAuthentication(globalvars.SECRET,globalvars.EMAIL, True, True)
+firebase = firebase.FirebaseApplication(globalvars.DSN, authentication)
 
 #For reading oneWire sensor
 os.system('modprobe w1-gpio')
